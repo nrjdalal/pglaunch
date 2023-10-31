@@ -1,12 +1,9 @@
 {
   "name": "pglaunch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Launch \"postgres database\" via CLI",
   "bin": {
     "prompt": "bin/script.zsh"
-  },
-  "engines": {
-    "node": ">=16.0.0"
   },
   "author": "Neeraj Dalal",
   "repository": {
