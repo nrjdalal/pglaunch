@@ -1,0 +1,21 @@
+{
+  "name": "pglaunch",
+  "version": "0.0.1",
+  "description": "Launch \"postgres database\" via CLI",
+  "bin": {
+    "prompt": "bin/script.zsh"
+  },
+  "author": "Neeraj Dalal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrjdalal/pglaunch.git"
+  },
+  "homepage": "https://github.com/nrjdalal/pglaunch#readme",
+  "bugs": {
+    "url": "https://github.com/nrjdalal/pglaunch/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "postgres"
+  ]
+}
