@@ -5,6 +5,9 @@
   "bin": {
     "prompt": "bin/script.zsh"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "author": "Neeraj Dalal",
   "repository": {
     "type": "git",
