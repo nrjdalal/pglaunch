@@ -1,6 +1,6 @@
 {
   "name": "pglaunch",
-  "version": "2.19.0",
+  "version": "2.20.0",
   "description": "Launch \"postgres database\" via CLI",
   "bin": {
     "prompt": "bin/script.sh"
