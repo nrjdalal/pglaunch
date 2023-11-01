@@ -1,3 +1,3 @@
 source bin/fx.zsh
 
-pglaunch
+pglaunch -p 5432 -n pglaunch

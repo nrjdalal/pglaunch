@@ -19,10 +19,11 @@ pglaunch() {
 
   name=""
   port=""
+  keep="--rm"
 
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
-    # name for postgres container (default: current directory name)
+    # name for docker container (default: current directory name)
     -n | --name)
       name="$2"
       if [[ -z "$name" ]]; then
@@ -40,6 +41,22 @@ pglaunch() {
         exit 1
       fi
       shift 2
+      ;;
+
+    -k | -keep)
+      keep=""
+      shift 1
+      ;;
+
+    -h | --help)
+      echo "Usage: pglaunch [options]"
+      echo
+      echo "Options:"
+      echo "  -n, --name <name>    name for docker container (default: current directory name)"
+      echo "  -p, --port <port>    port for postgres container (default: 5555)"
+      echo "  -k, --keep           keep postgres container after restart or exit"
+      echo "  -h, --help           show this help message and exit"
+      exit 0
       ;;
 
     *)
@@ -60,11 +77,11 @@ pglaunch() {
   pgdname="postgres"
 
   # check if postgres container is already running
-  existing=$(docker ps -a | grep 5432 | awk '{print $1}' | head -n 1)
+  existing=$(docker ps -a | grep ":$port" | awk '{print $1}' | head -n 1)
   [[ -n "$existing" ]] && docker rm -f $existing &>/dev/null
 
   # run postgres container
-  docker run --name $name -e POSTGRES_USER=$pguname -e POSTGRES_PASSWORD=$pgupass -e POSTGRES_DB=$pgdname -p $port:5432 -d --rm postgres:alpine &>/dev/null
+  docker run --name $name -e POSTGRES_USER=$pguname -e POSTGRES_PASSWORD=$pgupass -e POSTGRES_DB=$pgdname -p $port:5432 -d $keep postgres:alpine &>/dev/null
 
   echo "POSTGRES_URL=$(tput setaf 14)postgresql://$pguname:$pgupass@localhost:$port/$pgdname$(tput sgr0)"
 }
