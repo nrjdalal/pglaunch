@@ -34,7 +34,7 @@ Alternatively (recommended), you can install pglaunch globally:
 npx pglaunch
 ```
 
-Current implemented for zsh shell.
+Current implemented for bash/zsh shell.
 
 ## Examples
 

@@ -10,7 +10,8 @@ pglaunch() {
   }
 
   # check if docker is running
-  [[ $(docker info &>/dev/null)? -ne 0 ]] && {
+  docker info &>/dev/null
+  [[ $? ]] && {
     tput setaf 1
     echo "Docker is not running. Please start docker and try again."
     tput sgr0

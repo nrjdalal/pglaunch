@@ -3,10 +3,10 @@
   "version": "2.2.0",
   "description": "Launch \"postgres database\" via CLI",
   "bin": {
-    "prompt": "bin/script.zsh"
+    "prompt": "bin/script.sh"
   },
   "scripts": {
-    "test": "zsh bin/test.zsh"
+    "test": "bash bin/test.sh"
   },
   "author": "Neeraj Dalal",
   "repository": {
