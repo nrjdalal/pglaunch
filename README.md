@@ -23,16 +23,10 @@ Star this project on [GitHub](https://github.com/nrjdalal/pglaunch#readme) if yo
 ## Installation
 
 ```
-npm install -g pglaunch
+npx pglaunch
 ```
 
 Other package managers are also supported.
-
-Alternatively (recommended), you can install pglaunch globally:
-
-```
-npx pglaunch
-```
 
 Current implemented for bash/zsh shell.
 
