@@ -5,6 +5,7 @@ pglaunch() {
   which docker &>/dev/null || {
     tput setaf 1
     echo "Docker is not installed. Please install docker and try again."
+    echo "https://docs.docker.com/get-docker"
     tput sgr0
     exit 1
   }
@@ -61,7 +62,7 @@ pglaunch() {
       ;;
 
     -v | --version)
-      echo "pglaunch version 2.12.0"
+      echo "pglaunch version 2.13.0"
       exit 0
       ;;
 
