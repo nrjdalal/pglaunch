@@ -61,7 +61,7 @@ pglaunch() {
       ;;
 
     -v | --version)
-      echo "pglaunch version 2.9.0"
+      echo "pglaunch version 2.12.0"
       exit 0
       ;;
 
