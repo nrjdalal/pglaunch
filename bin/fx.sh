@@ -1,24 +1,6 @@
 pglaunch() {
   echo
 
-  # check if docker is installed
-  which docker &>/dev/null || {
-    tput setaf 1
-    echo "Docker is not installed. Please install docker and try again."
-    echo "https://docs.docker.com/get-docker"
-    tput sgr0
-    return 1
-  }
-
-  # check if docker is running
-  docker info &>/dev/null
-  [[ $? -eq 1 ]] && {
-    tput setaf 1
-    echo "Docker is not running. Please start docker and try again."
-    tput sgr0
-    return 1
-  }
-
   name=""
   port=""
   keep="--rm"
@@ -57,21 +39,41 @@ pglaunch() {
       echo "  -n, --name <name>    name for docker container (default: current directory name)"
       echo "  -p, --port <port>    port for postgres container (default: 5555)"
       echo "  -k, --keep           keep postgres container after restart or return"
-      echo "  -h, --help           show this help message and return"
+      echo "  -h, --help           show this help message"
+      echo "  -v, --version        show version"
       return 0
       ;;
 
     -v | --version)
-      echo "pglaunch version 2.18.0"
+      echo "pglaunch version 2.19.0"
       return 0
       ;;
 
     *)
       echo "Unknown option: $1"
+      echo "Try pglaunch --help for more information."
       return 1
       ;;
     esac
   done
+
+  # check if docker is installed
+  which docker &>/dev/null || {
+    tput setaf 1
+    echo "Docker is not installed. Please install docker and try again."
+    echo "https://docs.docker.com/get-docker"
+    tput sgr0
+    return 1
+  }
+
+  # check if docker is running
+  docker info &>/dev/null
+  [[ $? -eq 1 ]] && {
+    tput setaf 1
+    echo "Docker is not running. Please start docker and try again."
+    tput sgr0
+    return 1
+  }
 
   # set defaults if not provided
   [[ -z "$name" ]] && name="$(basename $(pwd))"
