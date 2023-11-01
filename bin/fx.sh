@@ -11,7 +11,7 @@ pglaunch() {
 
   # check if docker is running
   docker info &>/dev/null
-  [[ $? ]] && {
+  [[ $? -eq 1 ]] && {
     tput setaf 1
     echo "Docker is not running. Please start docker and try again."
     tput sgr0
