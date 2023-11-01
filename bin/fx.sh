@@ -7,7 +7,7 @@ pglaunch() {
     echo "Docker is not installed. Please install docker and try again."
     echo "https://docs.docker.com/get-docker"
     tput sgr0
-    exit 1
+    return 1
   }
 
   # check if docker is running
@@ -16,7 +16,7 @@ pglaunch() {
     tput setaf 1
     echo "Docker is not running. Please start docker and try again."
     tput sgr0
-    exit 1
+    return 1
   }
 
   name=""
@@ -30,7 +30,7 @@ pglaunch() {
       name="$2"
       if [[ -z "$name" ]]; then
         echo "-n or --name option requires an argument"
-        exit 1
+        return 1
       fi
       shift 2
       ;;
@@ -40,7 +40,7 @@ pglaunch() {
       port="$2"
       if [[ -z "$port" ]]; then
         echo "-p or --port option requires an argument"
-        exit 1
+        return 1
       fi
       shift 2
       ;;
@@ -56,19 +56,19 @@ pglaunch() {
       echo "Options:"
       echo "  -n, --name <name>    name for docker container (default: current directory name)"
       echo "  -p, --port <port>    port for postgres container (default: 5555)"
-      echo "  -k, --keep           keep postgres container after restart or exit"
-      echo "  -h, --help           show this help message and exit"
-      exit 0
+      echo "  -k, --keep           keep postgres container after restart or return"
+      echo "  -h, --help           show this help message and return"
+      return 0
       ;;
 
     -v | --version)
-      echo "pglaunch version 2.17.0"
-      exit 0
+      echo "pglaunch version 2.18.0"
+      return 0
       ;;
 
     *)
       echo "Unknown option: $1"
-      exit 1
+      return 1
       ;;
     esac
   done
