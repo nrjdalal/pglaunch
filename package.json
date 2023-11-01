@@ -5,6 +5,9 @@
   "bin": {
     "prompt": "bin/script.zsh"
   },
+  "scripts": {
+    "test": "zsh bin/test.zsh"
+  },
   "author": "Neeraj Dalal",
   "repository": {
     "type": "git",
