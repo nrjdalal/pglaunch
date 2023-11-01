@@ -1,6 +1,4 @@
 pglaunch() {
-  echo "pglaunch v0.0.1"
-
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
     # name for postgres container
