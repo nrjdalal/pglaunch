@@ -12,7 +12,7 @@ if [[ "$SHELL" == "/bin/bash" ]]; then
   curl -s https://raw.githubusercontent.com/nrjdalal/pglaunch/master/bin/fx.sh | cat >~/.pglaunch/fx.bash
   grep "source ~/.pglaunch/fx.bash" ~/.bashrc &>/dev/null || echo "source ~/.pglaunch/fx.bash" >>~/.bashrc
 
-  exec "Please restart your shell to use pglaunch (e.g. exec bash)"
+  echo "Please restart your shell to use pglaunch (e.g. exec bash)"
 fi
 
 echo "Unsupported shell: $SHELL"
