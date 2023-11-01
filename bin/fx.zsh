@@ -1,4 +1,6 @@
 pglaunch() {
+  echo "test release"
+
   while [[ "$#" -gt 0 ]]; do
     case "$1" in
     # name for postgres container
