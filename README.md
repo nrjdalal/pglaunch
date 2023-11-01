@@ -34,6 +34,8 @@ Alternatively (recommended), you can install pglaunch globally:
 npx pglaunch
 ```
 
+Current implemented for zsh shell.
+
 ## Examples
 
 1. Launch a PostgreSQL container with the default name and port:
