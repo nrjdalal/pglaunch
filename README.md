@@ -10,7 +10,8 @@ pglaunch is a simple script to launch a PostgreSQL docker container. It can be u
 pglaunch [options]
 
 Options:
-  -h, --help           show this help message and exit
+  -h, --help           show this help message
+  -v, --version        show version number
   -k, --keep           keep postgres container after restart or exit
   -n, --name <name>    name for docker container
                        (default: current directory name)

@@ -1,5 +1,5 @@
 pglaunch() {
-  echo
+  echo "pglaunch 2.9.0"
 
   # check if docker is installed
   which docker &>/dev/null || {
@@ -57,6 +57,11 @@ pglaunch() {
       echo "  -p, --port <port>    port for postgres container (default: 5555)"
       echo "  -k, --keep           keep postgres container after restart or exit"
       echo "  -h, --help           show this help message and exit"
+      exit 0
+      ;;
+
+    -v | --version)
+      echo "pglaunch version 2.9.0"
       exit 0
       ;;
 
