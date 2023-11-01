@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 mkdir -p ~/.pglaunch
 
 if [[ "$SHELL" == "/bin/zsh" ]]; then
