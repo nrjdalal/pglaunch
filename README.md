@@ -1,4 +1,4 @@
-# pglaunch - PostgreSQL Database Launcher
+# [pglaunch - PostgreSQL Database Launcher](https://www.npmjs.com/package/pglaunch)
 
 <!-- Descrition -->
 
