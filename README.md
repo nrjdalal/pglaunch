@@ -18,6 +18,8 @@ Options:
                        (default: 5555)
 ```
 
+Star this project on [GitHub](https://github.com/nrjdalal/pglaunch#readme) if you find it useful.
+
 ## Installation
 
 ```
