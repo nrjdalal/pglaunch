@@ -1,5 +1,5 @@
 pglaunch() {
-  echo "pglaunch 2.9.0"
+  echo
 
   # check if docker is installed
   which docker &>/dev/null || {
