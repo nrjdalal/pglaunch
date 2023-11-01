@@ -19,6 +19,14 @@
   },
   "license": "MIT",
   "keywords": [
-    "postgres"
+    "database",
+    "pg",
+    "pgcli",
+    "pglaunch",
+    "postgres",
+    "postgres cli",
+    "postgresql",
+    "psql",
+    "psql cli"
   ]
 }
