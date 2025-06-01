@@ -105,7 +105,3 @@ Check out more projects at [github.com/nrjdalal](https://github.com/nrjdalal)
 ## 📄 License
 
 MIT – [LICENSE](https://github.com/nrjdalal/pglaunch/blob/main/LICENSE)
-
-```
-
-```
