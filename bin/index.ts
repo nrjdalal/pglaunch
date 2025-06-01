@@ -137,13 +137,17 @@ const main = async () => {
       process.exit(1)
     }
 
-    // Start a new container
-    config.name = `${config.name}-${customAlphabet(
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      4,
-    )()}`
-
+    // Start a new container with config.name and config.port
     try {
+      config.name = `${config.name}-${customAlphabet(
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        4,
+      )()}`
+      const password = customAlphabet(
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        7,
+      )()
+
       await spawn("docker", [
         "run",
         "-d",
@@ -155,7 +159,7 @@ const main = async () => {
         "-e",
         "POSTGRES_USER=postgres",
         "-e",
-        "POSTGRES_PASSWORD=postgres",
+        `POSTGRES_PASSWORD=${password}`,
         "-e",
         "POSTGRES_DB=postgres",
         "postgres:alpine",
@@ -163,7 +167,7 @@ const main = async () => {
 
       console.log(
         `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
-          `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
+          `  ${green(`POSTGRES_URL=postgres://postgres:${password}@localhost:${config.port}/postgres`)}`,
       )
 
       if (!values.keep) {
