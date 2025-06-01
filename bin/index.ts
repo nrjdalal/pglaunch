@@ -6,7 +6,7 @@ import getPort from "get-port"
 import spawn from "nano-spawn"
 import { customAlphabet } from "nanoid"
 import terminalLink from "terminal-link"
-import { bold, green } from "yoctocolors"
+import { bold, green, red } from "yoctocolors"
 
 const helpMessage = `
 With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable PostgreSQL containers!
@@ -163,7 +163,7 @@ const main = async () => {
 
       console.log(
         `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
-          `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
+          `  ${red(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
       )
 
       if (!values.keep) {
