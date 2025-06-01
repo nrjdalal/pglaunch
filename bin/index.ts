@@ -130,9 +130,9 @@ const main = async () => {
         )
       }
       console.error(
-        "  Options:\n" +
-          "    1. Specify a different name with the `-n` flag, e.g. -n my-project.\n" +
-          "    2. Use the `-c` flag to start another container with the same name.",
+        "  Error:\n" +
+          "  - Specify a different name with the `-n` flag, e.g. -n my-project.\n" +
+          "  - Or use `-c` flag to start another container with a similar name.",
       )
       process.exit(1)
     }
