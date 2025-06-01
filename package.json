@@ -55,6 +55,12 @@
     ],
     "semi": false
   },
+  "dependencies": {
+    "get-port": "^7.1.0",
+    "nano-spawn": "^1.0.2",
+    "nanoid": "^5.1.5",
+    "yoctocolors": "^2.1.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
