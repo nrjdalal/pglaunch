@@ -15,7 +15,7 @@
 
 ## 📖 Some Examples
 
-### See [🚀 Usage](#🚀-usage) to learn more.
+### See [Usage](#-usage) to learn more.
 
 ```sh
 # Launch a Postgres container using the current directory name
