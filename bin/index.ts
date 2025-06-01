@@ -5,7 +5,7 @@ import { author, name, version } from "~/package.json"
 import getPort from "get-port"
 import spawn from "nano-spawn"
 import { customAlphabet } from "nanoid"
-import { green, red } from "yoctocolors"
+import { green } from "yoctocolors"
 
 const helpMessage = `Version:
   ${name}@${version}
