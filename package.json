@@ -1,6 +1,6 @@
 {
   "name": "pglaunch",
-  "version": "5.5.1",
+  "version": "5.5.2",
   "description": "Generate multiple PostgreSQL connection strings/databases using CLI for development environments!",
   "keywords": [
     "cli",
