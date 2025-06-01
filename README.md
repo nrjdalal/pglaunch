@@ -58,11 +58,11 @@ npx pglaunch [options]
 
 ```
 -n, --name <name>  Name for PostgresSQL database
-                    (default: current directory name)
+                  (default: current directory name)
 -p, --port <port>  Port for PostgresSQL database
-                    (default: random available port)
+                  (default: random available port)
 -k, --keep         Keep the container after exit
-                    (default: false)
+                  (default: false)
 -c, --confirm      Confirm starting another container with the same name
 -v, --version      Display version
 -h, --help         Display help
