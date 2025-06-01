@@ -11,6 +11,8 @@
 
 > #### Instantly launch a disposable PostgreSQL container with a unique database and connection URL - no Docker expertise required.
 
+<img width="800" alt="PGLaunch Demo" src="https://github.com/user-attachments/assets/3043465b-6270-4a6a-824b-fa8c541712ca" />
+
 ---
 
 ## 📖 Some Examples
@@ -39,7 +41,7 @@ npx pglaunch -h
 ## ✨ Features
 
 - 🐳 **One-command PostgreSQL**: Spins up an isolated `postgres:alpine` Docker container with sensible defaults.
-- 🔗 **Auto-generated connection URL**: Prints a POSTGRES connection URL (e.g., `POSTGRES_URL=postgres://postgres:postgres@localhost:5432/postgres`) so you can plug directly into your app or app's .envs.
+- 🔗 **Auto-generated connection URL**: Prints a POSTGRES connection URL (e.g. `POSTGRES_URL=postgres://postgres:postgres@localhost:5432/postgres`) so you can plug directly into your app or app's .envs.
 - 🎲 **Random port allocation**: If you don’t specify `-p`, PGLaunch finds an available port for you.
 - 🛡️ **Name collisions handled**: Detects existing containers with the same base name—warns you unless you use `-c` to confirm.
 - ♻️ **Cleanup by default**: Containers are removed on exit/system-restart unless you pass `-k` (keep) to persist them.
