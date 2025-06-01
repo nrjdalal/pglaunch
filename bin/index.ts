@@ -9,7 +9,7 @@ import terminalLink from "terminal-link"
 import { bold, green } from "yoctocolors"
 
 const helpMessage = `
-With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable lightweight PostgreSQL containers!
+With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable PostgreSQL containers!
 
 Usage:
   $ ${name} [options]
@@ -62,7 +62,7 @@ const main = async () => {
     }
 
     console.log(
-      `With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable lightweight PostgreSQL containers!`,
+      `\n  With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable PostgreSQL containers!\n`,
     )
 
     // Check if Docker is installed
