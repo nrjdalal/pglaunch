@@ -81,8 +81,6 @@ If Docker is missing or not running, PGLaunch will print an error like:
 - Docker is not installed. Please install Docker and try again.
   Download it here: https://docs.docker.com/desktop
 
----
-
 - Docker is installed but not running.
   Please start the Docker application/daemon and try again.
 ```
