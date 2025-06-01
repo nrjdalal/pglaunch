@@ -5,10 +5,11 @@ import { author, name, version } from "~/package.json"
 import getPort from "get-port"
 import spawn from "nano-spawn"
 import { customAlphabet } from "nanoid"
-import { green } from "yoctocolors"
+import terminalLink from "terminal-link"
+import { bold, green } from "yoctocolors"
 
-const helpMessage = `Version:
-  ${name}@${version}
+const helpMessage = `
+With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable lightweight PostgreSQL containers!
 
 Usage:
   $ ${name} [options]
@@ -59,6 +60,10 @@ const main = async () => {
         process.exit(0)
       }
     }
+
+    console.log(
+      `With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable lightweight PostgreSQL containers!`,
+    )
 
     // Check if Docker is installed
     try {
@@ -160,6 +165,12 @@ const main = async () => {
         `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
           `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
       )
+
+      if (!values.keep) {
+        console.log(
+          "\n  If you want to --keep the container after exit, use the `-k` flag.",
+        )
+      }
     } catch (err: any) {
       throw new Error(`Failed to start the Postgres container: ${err.message}`)
     }

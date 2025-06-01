@@ -31,9 +31,9 @@ npx pglaunch -k
 # Confirm launching a second container with the same base name
 npx pglaunch -n my-project -c
 # View help message
-npx pglaunch -v
-# View version
 npx pglaunch -h
+# View version
+npx pglaunch -v
 ```
 
 ---
