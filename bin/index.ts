@@ -121,7 +121,7 @@ const main = async () => {
           continue
         }
         console.info(
-          `- Container by similar name ${container.name} is already running at ${container.port}.\n  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${container.port}/postgres`)}`,
+          `- A container by similar name "${container.name}" running at port ${container.port}.\n\n  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${container.port}/postgres`)}\n`,
         )
       }
       console.error(
@@ -157,7 +157,7 @@ const main = async () => {
       ])
 
       console.log(
-        `- Container ${config.name} started successfully on port ${config.port}.\n` +
+        `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
           `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
       )
     } catch (err: any) {
