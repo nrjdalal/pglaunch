@@ -117,14 +117,17 @@ const main = async () => {
       )
     ) {
       for (const container of containersList) {
+        if (container.name.split("-").slice(0, -1).join("-") !== config.name) {
+          continue
+        }
         console.info(
-          `- Container by name ${container.name} is already running at ${container.port}.\n  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${container.port}/postgres`)}`,
+          `- Container by similar name ${container.name} is already running at ${container.port}.\n  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${container.port}/postgres`)}`,
         )
       }
       console.error(
         "\n  Options:\n" +
-          "    1. Specify a different name with the -n flag (e.g. -n my-project).\n" +
-          "    2. Use the -c flag to confirm starting another container with the same name.",
+          "    1. Specify a different name with the `-n` flag, e.g. -n my-project.\n" +
+          "    2. Use the `-c` flag to start another container with the same name.",
       )
       process.exit(1)
     }
