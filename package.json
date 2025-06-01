@@ -1,23 +1,7 @@
 {
   "name": "pglaunch",
-  "version": "4.0.0",
-  "description": "Launch \"postgres database\" via CLI",
-  "bin": {
-    "prompt": "bin/script.sh"
-  },
-  "scripts": {
-    "test": "bash bin/test.sh"
-  },
-  "author": "Neeraj Dalal",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nrjdalal/pglaunch.git"
-  },
-  "homepage": "https://github.com/nrjdalal/pglaunch#readme",
-  "bugs": {
-    "url": "https://github.com/nrjdalal/pglaunch/issues"
-  },
-  "license": "MIT",
+  "version": "5.0.0",
+  "description": "Generate multiple PostgreSQL connection strings/databases using CLI for development environments!",
   "keywords": [
     "cli",
     "database",
@@ -28,5 +12,59 @@
     "postgres",
     "postgresql",
     "psql"
-  ]
+  ],
+  "homepage": "https://github.com/nrjdalal/pglaunch#readme",
+  "bugs": "https://github.com/nrjdalal/pglaunch/issues",
+  "repository": "nrjdalal/pglaunch",
+  "funding": "https://github.com/sponsors/nrjdalal",
+  "license": "MIT",
+  "author": {
+    "name": "Neeraj Dalal",
+    "email": "admin@nrjdalal.com",
+    "url": "https://nrjdalal.com"
+  },
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": "./dist/bin/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "bin": "tsup && node dist/bin/index.js",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepare": "npx simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "npx commitlint --edit $1"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown",
+    "package.json": "sort-package-json"
+  },
+  "prettier": {
+    "plugins": [
+      "@ianvs/prettier-plugin-sort-imports"
+    ],
+    "semi": false
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@types/node": "^22.15.24",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.5.3",
+    "simple-git-hooks": "^2.13.0",
+    "sort-package-json": "^3.2.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  }
 }
