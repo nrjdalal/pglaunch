@@ -9,7 +9,7 @@ import terminalLink from "terminal-link"
 import { bold, green, red } from "yoctocolors"
 
 const helpMessage = `
-With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable PostgreSQL containers!
+With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch disposable PostgreSQL containers!
 
 Usage:
   $ ${name} [options]
@@ -62,7 +62,7 @@ const main = async () => {
     }
 
     console.log(
-      `\n  With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch a disposable PostgreSQL containers!\n`,
+      `\n  With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch disposable PostgreSQL containers!\n`,
     )
 
     // Check if Docker is installed
@@ -159,7 +159,7 @@ const main = async () => {
         "-e",
         "POSTGRES_USER=postgres",
         "-e",
-        `POSTGRES_PASSWORD=${password}`,
+        `POSTGRES_PASSWORD=postgres`,
         "-e",
         "POSTGRES_DB=postgres",
         "postgres:alpine",
@@ -167,7 +167,7 @@ const main = async () => {
 
       console.log(
         `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
-          `  ${green(`POSTGRES_URL=postgres://postgres:${password}@localhost:${config.port}/postgres`)}`,
+          `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
       )
 
       if (!values.keep) {
