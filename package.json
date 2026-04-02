@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "get-port": "^7.1.0",
-    "nano-spawn": "^1.0.2",
+    "nano-spawn": "^2.0.0",
     "nanoid": "^5.1.5",
     "terminal-link": "^4.0.0",
     "yoctocolors": "^2.1.1"
