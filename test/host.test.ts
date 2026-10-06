@@ -1,6 +1,7 @@
 import {
   connectHost,
   DEFAULT_HOST,
+  isLoopback,
   parseContainers,
   postgresUrl,
   publishSpec,
@@ -20,10 +21,27 @@ describe("validateHost", () => {
     expect(validateHost("[::1]")).toBe("::1")
   })
 
+  test("compresses IPv6 addresses", () => {
+    expect(validateHost("::0")).toBe("::")
+    expect(validateHost("0:0:0:0:0:0:0:0")).toBe("::")
+    expect(validateHost("0:0:0:0:0:0:0:1")).toBe("::1")
+  })
+
   test("rejects anything that is not an IP address", () => {
     for (const host of ["localhost", "", "example.com", "127.0.0.256"]) {
       expect(() => validateHost(host)).toThrow(`Invalid --host "${host}"`)
     }
+  })
+})
+
+describe("isLoopback", () => {
+  test("is true only for loopback addresses", () => {
+    expect(isLoopback("127.0.0.1")).toBe(true)
+    expect(isLoopback("127.0.1.1")).toBe(true)
+    expect(isLoopback("::1")).toBe(true)
+    expect(isLoopback("0.0.0.0")).toBe(false)
+    expect(isLoopback("::")).toBe(false)
+    expect(isLoopback("192.168.1.20")).toBe(false)
   })
 })
 
@@ -80,6 +98,20 @@ describe("parseContainers", () => {
       { name: "my-app-x1Y2", host: "0.0.0.0", port: "4612" },
       { name: "v6-AbCd", host: "::1", port: "4613" },
       { name: "unpublished-ZzZz", host: undefined, port: undefined },
+    ])
+  })
+
+  test("reads the unbracketed IPv6 Docker printed before 23.0", () => {
+    const stdout = [
+      "any-AAAA::::4611->5432/tcp",
+      "local-BBBB:::1:4613->5432/tcp",
+      "both-CCCC:0.0.0.0:4614->5432/tcp, :::4614->5432/tcp",
+    ].join("\n")
+
+    expect(parseContainers(stdout)).toEqual([
+      { name: "any-AAAA", host: "::", port: "4611" },
+      { name: "local-BBBB", host: "::1", port: "4613" },
+      { name: "both-CCCC", host: "0.0.0.0", port: "4614" },
     ])
   })
 })

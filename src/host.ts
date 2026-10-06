@@ -2,17 +2,32 @@ import { isIP } from "node:net"
 
 export const DEFAULT_HOST = "127.0.0.1"
 
+const unbracket = (host: string) => host.replace(/^\[(.*)\]$/, "$1")
+
 const bracket = (host: string) => (isIP(host) === 6 ? `[${host}]` : host)
 
+// Compresses an IPv6 address, e.g. 0:0:0:0:0:0:0:0 and ::0 both become ::
+const normalize = (address: string) => {
+  if (isIP(address) !== 6) return address
+  try {
+    return unbracket(new URL(`http://[${address}]`).hostname)
+  } catch {
+    return address
+  }
+}
+
 export const validateHost = (host: string) => {
-  const address = host.replace(/^\[(.*)\]$/, "$1")
+  const address = unbracket(host)
   if (!isIP(address)) {
     throw new Error(
       `Invalid --host "${host}": use an IP address, e.g. 127.0.0.1 (this machine only) or 0.0.0.0 (all interfaces).`,
     )
   }
-  return address
+  return normalize(address)
 }
+
+export const isLoopback = (host: string) =>
+  isIP(host) === 4 ? host.startsWith("127.") : host === "::1"
 
 // Docker's -p value, e.g. 127.0.0.1:5432:5432 or [::1]:5432:5432
 export const publishSpec = (host: string, port: string) =>
@@ -28,7 +43,7 @@ export const connectHost = (host: string) => {
 export const postgresUrl = (host: string, port: string) =>
   `postgres://postgres:postgres@${connectHost(host)}:${port}/postgres`
 
-// Parses `docker ps --format {{.Names}}:{{.Ports}}` lines, e.g. pglaunch-oAsK:127.0.0.1:4611->5432/tcp
+// Parses `docker ps --format {{.Names}}:{{.Ports}}` lines, e.g. pglaunch-oAsK:127.0.0.1:4611->5432/tcp, where Docker before 23.0 printed IPv6 unbracketed (:::4611->5432/tcp)
 export const parseContainers = (stdout: string) =>
   stdout
     .split("\n")
@@ -36,11 +51,14 @@ export const parseContainers = (stdout: string) =>
     .map((line) => {
       const firstColon = line.indexOf(":")
       const name = line.slice(0, firstColon)
-      const portInfo = line.slice(firstColon + 1)
-      const match = portInfo.match(/(\[[^\]]*\]|[\d.]+):(\d+)->5432\/tcp/)
+      const binding = line
+        .slice(firstColon + 1)
+        .split(", ")
+        .map((entry) => entry.match(/^(.*):(\d+)->5432\/tcp$/))
+        .find(Boolean)
       return {
         name,
-        host: match ? match[1].replace(/^\[(.*)\]$/, "$1") : undefined,
-        port: match ? match[2] : undefined,
+        host: binding ? normalize(unbracket(binding[1])) : undefined,
+        port: binding ? binding[2] : undefined,
       }
     })

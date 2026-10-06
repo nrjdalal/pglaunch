@@ -3,6 +3,7 @@ import path from "node:path"
 import { parseArgs } from "node:util"
 import {
   DEFAULT_HOST,
+  isLoopback,
   parseContainers,
   postgresUrl,
   publishSpec,
@@ -72,6 +73,8 @@ const main = async () => {
       }
     }
 
+    const host = validateHost(values.host ?? DEFAULT_HOST)
+
     console.log(
       `\n  With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch disposable PostgreSQL containers!\n`,
     )
@@ -101,7 +104,7 @@ const main = async () => {
     const config: Record<string, string> = {
       name: values.name || path.basename(process.cwd()),
       port: values.port || String(await getPort()),
-      host: validateHost(values.host ?? DEFAULT_HOST),
+      host,
     }
 
     // List all running containers as { name, host, port }[] where image is postgres:alpine
@@ -171,9 +174,9 @@ const main = async () => {
           `  ${green(`POSTGRES_URL=${postgresUrl(config.host, config.port)}`)}`,
       )
 
-      if (config.host === "0.0.0.0" || config.host === "::") {
+      if (!isLoopback(config.host)) {
         console.log(
-          `\n  ${red("Warning:")} published on ${config.host}, so any device on your network can reach this database with the default credentials.`,
+          `\n  ${red("Warning:")} published on ${config.host}, so other devices on your network can reach this database with the default credentials.`,
         )
       }
 
