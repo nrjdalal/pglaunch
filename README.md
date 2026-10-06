@@ -13,7 +13,9 @@
 
 <img width="800" alt="PGLaunch Demo" src="https://github.com/user-attachments/assets/3043465b-6270-4a6a-824b-fa8c541712ca" />
 
-> [!IMPORTANT] > **Behaviour change:** PGLaunch now publishes the database on `127.0.0.1`, so only this machine can reach it. Earlier versions published on `0.0.0.0`, which put every database on your network. Pass `--host 0.0.0.0` to get the old behaviour back. See [Network Access](#-network-access).
+<!-- prettier-ignore -->
+> [!IMPORTANT]
+> **Behaviour change:** PGLaunch now publishes the database on `127.0.0.1`, so only this machine can reach it. Versions up to 5.5.7 published on `0.0.0.0`, which put every database on your network. Pass `--host 0.0.0.0` to get the old behaviour back. See [Network Access](#-network-access).
 
 ---
 
@@ -93,9 +95,14 @@ npx pglaunch --host 0.0.0.0
 npx pglaunch --host 192.168.1.20
 ```
 
-`--host` takes an IP address (IPv4 or IPv6), not a hostname. The printed `POSTGRES_URL` points at the address the database is published on, and at `127.0.0.1` when it is published on `0.0.0.0`. With `--host 0.0.0.0` PGLaunch prints a warning, since every database it starts uses the default `postgres`/`postgres` credentials.
+`--host` takes an IP address (IPv4 or IPv6), not a hostname. The printed `POSTGRES_URL` points at the address the database is published on: `127.0.0.1` for `0.0.0.0`, `[::1]` for `::`, and the address itself otherwise. For any address other than loopback PGLaunch prints a warning, since every database it starts uses the default `postgres`/`postgres` credentials.
 
-> **Behaviour change:** versions before this one published on `0.0.0.0` and printed `localhost` in `POSTGRES_URL`. The URL now names `127.0.0.1`, since the database no longer listens on IPv6 (`::1`), which `localhost` can resolve to first.
+You also need `--host` when the client is not on this machine's loopback, for example:
+
+- on Linux, an app in another container that reaches the host through its gateway (`host.docker.internal` mapped to `host-gateway`)
+- a remote Docker daemon (`DOCKER_HOST`), where `127.0.0.1` is the remote machine's loopback
+
+> **Behaviour change:** versions up to 5.5.7 published on `0.0.0.0` and printed `localhost` in `POSTGRES_URL`. The URL now names `127.0.0.1`, since the database no longer listens on IPv6 (`::1`), which `localhost` can resolve to first.
 
 ---
 
