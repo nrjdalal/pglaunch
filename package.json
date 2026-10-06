@@ -37,7 +37,9 @@
     "bin": "tsup && node dist/bin/index.js",
     "build": "tsup",
     "dev": "tsup --watch",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
@@ -69,6 +71,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@types/bun": "^1.4.2",
     "@types/node": "^22.15.24",
     "lint-staged": "^15.5.2",
     "prettier": "^3.5.3",

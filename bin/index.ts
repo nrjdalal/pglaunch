@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 import path from "node:path"
 import { parseArgs } from "node:util"
+import {
+  DEFAULT_HOST,
+  isLoopback,
+  parseContainers,
+  postgresUrl,
+  publishSpec,
+  validateHost,
+} from "@/host"
 import { author, name, version } from "~/package.json"
 import getPort from "get-port"
 import spawn from "nano-spawn"
@@ -19,6 +27,9 @@ Options:
                      (default: current directory name)
   -p, --port <port>  Port for PostgresSQL database
                      (default: random available port)
+      --host <addr>  Host address to publish the port on
+                     (default: ${DEFAULT_HOST}, this machine only;
+                     use 0.0.0.0 to expose it to your network)
   -k, --keep         Keep the container after exit
                      (default: false)
   -c, --confirm      Confirm starting another container with the same name
@@ -43,6 +54,7 @@ const main = async () => {
       options: {
         name: { type: "string", short: "n" },
         port: { type: "string", short: "p" },
+        host: { type: "string" },
         keep: { type: "boolean", short: "k", default: false },
         confirm: { type: "boolean", short: "c", default: false },
         help: { type: "boolean", short: "h" },
@@ -60,6 +72,8 @@ const main = async () => {
         process.exit(0)
       }
     }
+
+    const host = validateHost(values.host ?? DEFAULT_HOST)
 
     console.log(
       `\n  With ${bold(`${terminalLink("PGLaunch", "https://github.com/nrjdalal/pglaunch")}`)} instantly launch disposable PostgreSQL containers!\n`,
@@ -90,9 +104,10 @@ const main = async () => {
     const config: Record<string, string> = {
       name: values.name || path.basename(process.cwd()),
       port: values.port || String(await getPort()),
+      host,
     }
 
-    // List all running containers with names and ports as {name: port}[] where image is postgres:alpine
+    // List all running containers as { name, host, port }[] where image is postgres:alpine
     let { stdout: containers } = await spawn("docker", [
       "ps",
       "--filter",
@@ -101,18 +116,7 @@ const main = async () => {
       "{{.Names}}:{{.Ports}}",
     ])
 
-    const containersList = containers
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => {
-        // Example container info: pglaunch-oAsK:0.0.0.0:4611->5432/tcp
-        const firstColon = line.indexOf(":")
-        const name = line.slice(0, firstColon)
-        const portInfo = line.slice(firstColon + 1)
-        const hostPortMatch = portInfo.match(/(\d+)->5432\/tcp/)
-        const port = hostPortMatch ? hostPortMatch[1] : undefined
-        return { name, port }
-      })
+    const containersList = parseContainers(containers)
 
     // Check if the container name already exists
     if (
@@ -126,7 +130,7 @@ const main = async () => {
           continue
         }
         console.info(
-          `- A container by similar name "${container.name}" running at port ${container.port}.\n\n  ${red(`POSTGRES_URL=postgres://postgres:postgres@localhost:${container.port}/postgres`)}\n`,
+          `- A container by similar name "${container.name}" running at port ${container.port}.\n\n  ${red(`POSTGRES_URL=${postgresUrl(container.host ?? DEFAULT_HOST, String(container.port))}`)}\n`,
         )
       }
       console.error(
@@ -155,7 +159,7 @@ const main = async () => {
         "--name",
         config.name,
         "-p",
-        `${config.port}:5432`,
+        publishSpec(config.host, config.port),
         "-e",
         "POSTGRES_USER=postgres",
         "-e",
@@ -167,8 +171,14 @@ const main = async () => {
 
       console.log(
         `- A container with name "${config.name} :${config.port}" started successfully.\n\n` +
-          `  ${green(`POSTGRES_URL=postgres://postgres:postgres@localhost:${config.port}/postgres`)}`,
+          `  ${green(`POSTGRES_URL=${postgresUrl(config.host, config.port)}`)}`,
       )
+
+      if (!isLoopback(config.host)) {
+        console.log(
+          `\n  ${red("Warning:")} published on ${config.host}, so other devices on your network can reach this database with the default credentials.`,
+        )
+      }
 
       if (!values.keep) {
         console.log(
