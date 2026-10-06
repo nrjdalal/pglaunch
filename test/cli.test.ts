@@ -38,6 +38,7 @@ const run = (args: string[], ps = "") => {
       FAKE_DOCKER_PS: ps,
       PATH: `${dir}${path.delimiter}${process.env.PATH}`,
     },
+    timeout: 30_000,
   })
   const calls = readFileSync(log, "utf8").split("\n").filter(Boolean)
   return {
