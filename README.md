@@ -15,7 +15,7 @@
 
 <!-- prettier-ignore -->
 > [!IMPORTANT]
-> **Behaviour change:** PGLaunch now publishes the database on `127.0.0.1`, so only this machine can reach it. Versions up to 5.5.7 published on `0.0.0.0`, which put every database on your network. Pass `--host 0.0.0.0` to get the old behaviour back. See [Network Access](#-network-access).
+> **Behaviour change:** PGLaunch now publishes the database on `127.0.0.1`, so only this machine can reach it. Versions up to 5.5.7, and 5.6.0-canary.0, published on `0.0.0.0`, which put every database on your network. Pass `--host 0.0.0.0` to get the old behaviour back. See [Network Access](#-network-access).
 
 ---
 
@@ -102,7 +102,7 @@ You also need `--host` when the client is not on this machine's loopback, for ex
 - on Linux, an app in another container that reaches the host through its gateway (`host.docker.internal` mapped to `host-gateway`)
 - a remote Docker daemon (`DOCKER_HOST`), where `127.0.0.1` is the remote machine's loopback
 
-> **Behaviour change:** versions up to 5.5.7 published on `0.0.0.0` and printed `localhost` in `POSTGRES_URL`. The URL now names `127.0.0.1`, since the database no longer listens on IPv6 (`::1`), which `localhost` can resolve to first.
+> **Behaviour change:** versions up to 5.5.7, and 5.6.0-canary.0, published on `0.0.0.0` and printed `localhost` in `POSTGRES_URL`. The URL now names `127.0.0.1`, since the database no longer listens on IPv6 (`::1`), which `localhost` can resolve to first.
 
 ---
 
